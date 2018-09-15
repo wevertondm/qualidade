@@ -40,11 +40,7 @@ public class ReservaPassagemAerea {
 		int resposta = JOptionPane.showConfirmDialog(null, "Deseja verificar dados?", "Confirmação do programa",
 				JOptionPane.YES_NO_OPTION);
 		if (resposta == JOptionPane.YES_OPTION) {
-			JTextArea saida = new JTextArea(10, 40);
-			saida.setText("Nro\tOrigem\tDestino\tPassageiros");
-			saida.append(dadosDeEntradaDosVoosCadastradosNoPrograma);
-			JScrollPane scroll = new JScrollPane(saida);
-			JOptionPane.showMessageDialog(null, scroll, "Dados dos vôos: ", JOptionPane.INFORMATION_MESSAGE);
+			mostrarDadosVoo();
 		}
 		// MENU GERAL
 		while (true) {
@@ -65,48 +61,30 @@ public class ReservaPassagemAerea {
 								if (opcao < 1 || opcao > 3) {
 									JOptionPane.showMessageDialog(null, "Número do vôo Inexistente");
 								} else {
-									for (int variavelFor = 0; variavelFor <= 2; variavelFor++) {
-										if (voo[variavelFor] == (opcao)) {
-											String resultado = "Vôo: " + voo[variavelFor] + "\n" + "Origem: "
-													+ origem[variavelFor] + "\n" + "Destino: " + destino[variavelFor]
-													+ "\n" + "Lugares: " + lugares[variavelFor];
-											JOptionPane.showMessageDialog(null, resultado);
-										} // FIM DO IF
-											// Não excluir esse código -
-											// verificação origem
-											// Autor: Pangrácio - 12/11/2015
-											// if (voo[variavelFor] ==
-											// (opcao-1)) {
-											// String resultado = "Vôo:
-											// "+voo[variavelFor] + "\n" +
-											// "Origem: "+origem[variavelFor] +
-											// "\n" + "Destino:
-											// "+destino[variavelFor] + "\n" +
-											// "Lugares: "+lugares[variavelFor];
-											// JOptionPane.showMessageDialog(null,
-											// resultado);
-											// } // FIM DO IF
-									} // FIM DA ITERAÇÃO FOR VARIAVELFOR
-								} // FIM DO ELSE
-							} // FIM DA OPÇÃO 1
+									for (int i = 0; i <= 2; i++) {
+										if (voo[i] == (opcao)) {
+											mostrarDadosUsuario(i);
+										} 
+
+									}
+								} 
+							} 
 							if (opcao2 == 2) {
 								sopcao = JOptionPane
 										.showInputDialog("CONSULTAR VÔO POR ORIGEM DO VÔO\n\n" + "Informe a origem");
 								Boolean verOrigem = true;
-								verOrigem = verVPO(sopcao);
+								verOrigem = verVooPorOrigemO(sopcao);
 								if (verOrigem == false) {
 									JOptionPane.showMessageDialog(null, "Origem não cadastrada no programa. Verifique",
 											"Mensagem do Sistema", JOptionPane.INFORMATION_MESSAGE);
 								} else {
-									for (int variavelFor = 0; variavelFor <= 2; variavelFor++) {
-										if (origem[variavelFor].equalsIgnoreCase(sopcao)) {
-											String resultado = "Vôo: " + voo[variavelFor] + "\n" + "Origem: "
-													+ origem[variavelFor] + "\n" + "Destino: " + destino[variavelFor]
-													+ "\n" + "Lugares: " + lugares[variavelFor];
-											JOptionPane.showMessageDialog(null, resultado);
-										} // FIM DO IF
-									} // FIM DA ITERAÇÃO FOR VARIAVELFOR
-								} // FIM DO ELSE IF
+									
+									for (int i = 0; i <= 2; i++) {
+										if (origem[i].equalsIgnoreCase(sopcao)) {
+											mostrarDadosUsuario(i);
+										}
+									} 
+								} 
 							}
 							if (opcao2 == 3) {
 								sopcao = JOptionPane
@@ -117,23 +95,15 @@ public class ReservaPassagemAerea {
 									JOptionPane.showMessageDialog(null, "Origem não cadastrada no programa. Verifique",
 											"Mensagem do Sistema", JOptionPane.INFORMATION_MESSAGE);
 								} else {
-									for (int variavelFor = 0; variavelFor <= 2; variavelFor++) {
-										if (destino[variavelFor].equalsIgnoreCase(sopcao)) {
-											String resultado = "Vôo: " + voo[variavelFor] + "\n" + "Origem: "
-													+ origem[variavelFor] + "\n" + "Destino: " + destino[variavelFor]
-													+ "\n" + "Lugares: " + lugares[variavelFor];
-											JOptionPane.showMessageDialog(null, resultado);
-										} // FIM DO IF
-									} // FIM DA ITERAÇÃO FOR VARIAVELFOR
-								} // FIM DO ELSE IF
+									for (int i = 0; i <= 2; i++) {
+										if (destino[i].equalsIgnoreCase(sopcao)) {
+											mostrarDadosUsuario(i);
+										} 
+									} 
+								} 
 							}
 							if (opcao2 == 4) {
-								JTextArea saida = new JTextArea(10, 40);
-								saida.setText("Nro\tOrigem\tDestino\tPassageiros");
-								saida.append(dadosDeEntradaDosVoosCadastradosNoPrograma);
-								JScrollPane scroll = new JScrollPane(saida);
-								JOptionPane.showMessageDialog(null, scroll, "Dados dos vôos: ",
-										JOptionPane.INFORMATION_MESSAGE);
+								mostrarDadosVoo();
 							}
 							if (opcao2 == 5) {
 								break;
@@ -159,12 +129,23 @@ public class ReservaPassagemAerea {
 		} // while geral
 		System.out.println("\n\nPROGRAMA FINALIZADO!");
 	}
-	// main
-	// VERIFICA SE HÁ VÔO PARA A ORIGEM INFORMADA PELO USUÁRIO
-	// OU SEJA: VERVPO (VERIFICA VÔO POR ORIGEM) O PARÂMETRO
-	// ARGS É O NOME DA CIDADE DE ORIGEM. ENTENDEU?
 
-	private static Boolean verVPO(String args) {
+	private static void mostrarDadosVoo() {
+		JTextArea saida = new JTextArea(10, 40);
+		saida.setText("Nro\tOrigem\tDestino\tPassageiros");
+		saida.append(dadosDeEntradaDosVoosCadastradosNoPrograma);
+		JScrollPane scroll = new JScrollPane(saida);
+		JOptionPane.showMessageDialog(null, scroll, "Dados dos vôos: ", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	private static void mostrarDadosUsuario(int i) {
+		String resultado = "Vôo: " + voo[i] + "\n" + "Origem: "
+				+ origem[i] + "\n" + "Destino: " + destino[i]
+				+ "\n" + "Lugares: " + lugares[i];
+		JOptionPane.showMessageDialog(null, resultado);
+	} 
+	// primeira refatoração
+	private static Boolean verVooPorOrigemO(String args) {
 		for (int variavelFor = 0; variavelFor <= 2; variavelFor++) {
 			if (origem[variavelFor].equalsIgnoreCase(sopcao)) {
 				return true;
@@ -172,9 +153,6 @@ public class ReservaPassagemAerea {
 		}
 		return false;
 	}
-	// VERIFICA SE HÁ VÔO PARA O DESTINO INFORMADO PELO USUÁRIO
-	// OU SEJA: VERVPD (VERIFICA VÔO POR DESTINO) O PARÂMETRO
-	// ARGS É O NOME DA CIDADE DE DESTINO. ENTENDEU?
 
 	private static Boolean verVPD(String args) {
 		for (int variavelFor = 0; variavelFor <= 2; variavelFor++) {
