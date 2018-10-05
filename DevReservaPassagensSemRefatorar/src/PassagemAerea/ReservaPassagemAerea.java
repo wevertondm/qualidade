@@ -137,7 +137,7 @@ public class ReservaPassagemAerea {
 		JScrollPane scroll = new JScrollPane(saida);
 		JOptionPane.showMessageDialog(null, scroll, "Dados dos vôos: ", JOptionPane.INFORMATION_MESSAGE);
 	}
-
+	
 	private static void mostrarDadosUsuario(int i) {
 		String resultado = "Vôo: " + voo[i] + "\n" + "Origem: "
 				+ origem[i] + "\n" + "Destino: " + destino[i]
@@ -153,7 +153,6 @@ public class ReservaPassagemAerea {
 		}
 		return false;
 	}
-
 	private static Boolean verVPD(String args) {
 		for (int variavelFor = 0; variavelFor <= 2; variavelFor++) {
 			if (destino[variavelFor].equalsIgnoreCase(sopcao)) {
